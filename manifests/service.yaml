@@ -1,0 +1,8 @@
+# service.yaml — single service selecting BOTH ReplicaSets
+apiVersion: v1
+kind: Service
+metadata:
+  name: emr-demo
+spec:
+  selector: { app: emr-demo }
+  ports: [{ port: 80, targetPort: 8080 }]

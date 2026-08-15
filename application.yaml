@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: emr-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/sparkmatters/gitops-canary.git
+    targetRevision: main
+    path: manifests
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: emr-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+  ignoreDifferences:                # so HPA/canary replica changes don't fight self-heal
+    - group: argoproj.io
+      kind: Rollout
+      jsonPointers:
+        - /spec/replicas
