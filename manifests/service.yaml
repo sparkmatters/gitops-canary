@@ -6,3 +6,4 @@ metadata:
 spec:
   selector: { app: emr-demo }
   ports: [{ port: 80, targetPort: 8080 }]
+  type: NodePort
